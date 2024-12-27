@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billion Seconds Birthday Calculator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #6a11cb, #2575fc);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        #result {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #result p {
+            font-size: 10vw; /* Responsive font size based on viewport width */
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div id="result">
+            <p><span id="billionthSecondDate"></span></p>
+            <p><span id="currentAgeSeconds"></span></p>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Fixed birth date and time
+            const birthDateTime = new Date('1993-09-27T09:50:00'); // ISO format
+            const birthTimestamp = birthDateTime.getTime();
+
+            // Calculate the 1-billionth second date
+            const billionSecondsInMilliseconds = 1e9 * 1000; // 1 billion seconds in milliseconds
+            const billionthSecondDate = new Date(birthTimestamp + billionSecondsInMilliseconds);
+
+            // Display the billionth second date
+            document.getElementById('billionthSecondDate').textContent = billionthSecondDate.toLocaleString();
+
+            // Function to update current age in seconds
+            function updateAgeInSeconds() {
+                const currentTimestamp = Date.now(); // Current time in milliseconds
+                const ageInMilliseconds = currentTimestamp - birthTimestamp;
+
+                if (ageInMilliseconds < 0) {
+                    alert('You cannot be born in the future!');
+                    return;
+                }
+
+                const ageInSeconds = Math.floor(ageInMilliseconds / 1000);
+                document.getElementById('currentAgeSeconds').textContent = ageInSeconds.toLocaleString(); // Format with commas
+            }
+
+            // Update age immediately and every second
+            updateAgeInSeconds(); // Initial update
+            setInterval(updateAgeInSeconds, 1000); // Update every second
+        });
+    </script>
+</body>
+
+</html>
